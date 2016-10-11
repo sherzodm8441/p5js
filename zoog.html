@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <title>p5js Template</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.3/p5.js"></script>
+    
+    <script>
+        function setup() {
+            createCanvas(1000,1000)
+            
+        }
+
+        function draw() {
+            noFill(0)
+            colorMode(RGB)
+            fill("orange"); //color of the 3 circles
+            ellipse(500,500,600,500); //outer circle
+            ellipse(500,500,500,500); //middle circle
+            ellipse(500,500,400,500); //inner circle
+            fill(236,234,155); //color of the top oval
+            ellipse(500,275,250,50);  //top oval
+            fill("red"); //color of the eyes
+            ellipse(425,380,100,100); //left eye
+            ellipse(575,380,100,100); //right eye
+            fill("black"); //color of the triangle
+            triangle(400,650,500,500,600,650); //triangle
+            fill(200,249,254); //color of the tapes
+            quad(425,525,625,625,600,650,400,550); //bottom tape
+            quad(400,625,600,525,625,550,425,650); //top tape
+            fill(0); //color of the text
+            textSize(200); //size of the text
+            text("BOO!",100,200); //text
+            
+        }
+    </script>
+</head>
+
+<body>
+    <div id="code" class="container-fluid">
+        <script src="https://gist-it.appspot.com/github/sherzodm8441/p5js/blob/gh-pages/ZOOG.html?footer=0"></script>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script>
+        $(window).bind("load", function() {
+            $('#code').before($('#defaultCanvas0').remove());
+        });
+    </script>
+</body>
+
+
+</html>
