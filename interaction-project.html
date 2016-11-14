@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <title>p5js Template</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.3/p5.js"></script>
+    
+    <script>
+    var x,y;
+   
+    var n;
+    var p1, p2;
+        function setup() {
+            createCanvas(800,600);
+            x=400; //50;
+            y=300; //50;
+            n=50;
+            
+           p1 = 0;
+           p2 =0;
+           
+        }
+
+        function draw() {
+            text("Press C to clear the screen", 10,20); //prints out the text
+            text("Press T to create a triangle", 10,30);
+            text("Press R to create a rectangle",10,40);
+            text("Press W to change the size of the triangle",10,50);
+            text("Press O to change the size of the triangle to 50",10,60);
+         
+           
+            stroke(x*2,mouseY/2,mouseX/2); //color of the circles and the lines
+            ellipse(x,y,n,n)
+            if(x < mouseX){
+                for(x=50;x<=mouseX;x++); //these 4 if statements tell the circles to follow the cursor
+            }
+            if(y<mouseY){
+                for(y=50;y<=mouseY;y++);
+            }
+            if(y>=mouseY){
+                y--;
+            }
+            if(x>=mouseX){
+                x--;
+            }
+            
+            
+            
+        }
+        function mouseDragged() {
+            
+            line(p1,p2,mouseX,mouseY);//creates the lines when the mouse is dragged
+           p1++; 
+           p2++;
+            if(p1 > width){
+                for(x>=width;x=0;p1--); //these 2 if statements contantly change the first x and y values of the lines
+                if(p1=0){
+                    p1++;
+                }
+                
+            }
+            if(p2 > height){
+                for(p2>=height;p2=0;p2--);
+                if(p2=0){
+                    p2++;
+                }
+            }
+           
+        }
+        
+        
+        function keyTyped(){
+            if(key === 'c'){ //pressing C clears the canvas
+                clear();
+            }
+            if(key === 'w'){
+                n= random(150);//changes the diameter of the circle
+            }
+            if(key === 'o'){
+                n =50;//changes the diameter of the circle back to 50
+            }
+            if(key === 't'){
+                triangle(mouseX-10,mouseY+10,mouseX,mouseY-10,mouseX+10,mouseY+10);//creates a  triangle on the cursor
+            }
+            if(key === 'r'){
+                rectMode(CENTER);
+                rect(mouseX,mouseY,20,20);//creates a rectangle on the cursor
+            }
+            
+        }
+    </script>
+</head>
+<body>
+    <div id="code" class="container-fluid">
+        <script src="https://gist-it.appspot.com/github/sherzodm8441/p5js/blob/gh-pages/interaction-project.html?footer=0"></script>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script>
+        $(window).bind("load", function() {
+            $('#code').before($('#defaultCanvas0').remove());
+        });
+    </script>
+</body>
+
+</html>
