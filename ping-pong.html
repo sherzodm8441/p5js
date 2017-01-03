@@ -1,0 +1,279 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <title>p5js Template</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.3/p5.js"></script>
+    
+    <script>
+    //bunch of variables, to be honest i forgot their function in tis program
+        var ballX;//x location of the ball
+        var ballY;//y locatin of the ball
+        var ballSpeedX = 5;//change in x value
+        var ballSpeedY = 5;//change in y value
+        var paddleHeight = 25;
+         
+        var click = false;
+        var w = 200;
+        var score = 0;
+        var score1 = 0; 
+        var r,g,b;
+        var c,v,b;
+        var n,m;
+        var head;
+        var solo =false;
+        var mul =false;
+        var ready = false;
+        var p1,p2;
+
+      
+        
+        function preload(){//loads the image of the skull 
+            head = loadImage("skeleton.png");
+           
+        }
+
+        function setup() {
+            createCanvas(500, 500);
+            ballX = random(width);//makes the ball start at the center
+            ballY = random(height / 3 + 50);//makes the ball start at the center
+            r = 255;
+            g = 255;
+            b = 255;
+            p1 = width/3;
+            p2 = width/3;
+           
+           
+        }
+
+        function draw() {
+                       
+            if(key=== 'r'){//determines if r is pressed
+                ready=true;
+            }
+            //changes color based on the locations of the paddles and the skull
+             c =map(ballX,0,500,0,255);
+            v =map(p1,0,500,0,255);
+            b =map(p2,0,500,0,255);
+            n =map(mouseX,0,500,0,255);
+            m = (c/2)+(n/2);
+            
+
+            menu();
+            w = constrain(w,50,200);
+            
+            
+            if(solo== true){//runs when singleplayer is clicked
+            noCursor();
+            background(c,m,n);//background color
+            fill(0);
+            textSize(20);
+            text("Score:" + score,10,50);
+
+            moveBall();//calling  function
+            checkCollide();//calling function 
+            drawPaddle(w);//calling function
+            drawHead();//calling function
+            }
+             if(mul == true){//runs when multiplayer is clicked
+               //instructions 
+                 background(0);
+                 fill(255,0,0);
+                 textSize(15);
+                 text("Top paddle controls: j for left, l for right",width/4,height/3);
+                 text("Bottom paddle controls: a for left, d for right",width/4,height/2);
+                 text("Press R to start",width/4,height-height/3)
+                if(ready==true){//runs if r is pressed
+                 //bunch of functions are called here
+                background(c,v,b);//
+                drawHead();
+                moveBall();
+                collision1();
+               
+                drawPaddle0();
+                drawPaddle2();
+                 displayScore();
+                keyInput1();
+                }
+                 }
+                
+                }
+            
+        
+
+        function moveBall() { moves the skull
+            ballX = ballX + ballSpeedX;//adds 5 to the current x location
+            ballY = ballY + ballSpeedY;//adds 5 to the current y location
+
+            console.log("ballSpeedX: " + ballSpeedX + 
+                               ", ballSpeedY: " + ballSpeedY);//prints out the value of ballSpeedX and ballSpeedY to the console
+        }
+
+        function checkCollide() {//defines a functionto check if the ball if touching the edges in singleplayer
+            if (ballX < 0 || ballX > width) {//if touching either left or tight
+                ballSpeedX = ballSpeedX * -1;//move in the opposite direction
+            }
+            if (ballY < 0) {//if touching the top
+                ballSpeedY = ballSpeedY * -1;//move in the opposite direction
+            }
+            if (ballY > height - (paddleHeight+ 20)) {//if the ball's y location is higher than the paddles y location
+                if (ballX > (mouseX-w/2) && ballX < (mouseX-w/2) + 200) {//and if the ball's x lacation is the same as the paddle's x lacation
+                    ballSpeedY = ballSpeedY * - 1.05;//bounce off
+                    w -= 5;
+                    score++;
+                   
+                    r = random(255);
+                    g = random(255);
+                    b = random(255);
+                    
+                    
+                    
+                }
+                else {
+                    background(0);
+                    fill(255,0,0);
+                    textSize(50);
+                    text("GAME OVER!", width / 4, height / 2);
+                    text("Final Score: " + score, width/4,height/3);//if the y location of the ball if lower than the y lacation of the paddle, display the text
+                    noLoop();//freeze
+                }
+            }
+        }
+        function collision1(){ //check where the skull collides in multiplayer
+                        if (ballX < 0 || ballX > width) {//if touching either left or tight
+                ballSpeedX = ballSpeedX * -1;//move in the opposite direction
+            }
+            if (ballY < 0) {//if touching the top
+                ballSpeedY = ballSpeedY * -1;//move in the opposite direction
+            }
+            if (ballY > height - (paddleHeight+ 20)) {//if the ball's y location is higher than the paddles y location
+                if (ballX > p1 && ballX < p1 + w) {//and if the ball's x lacation is the same as the paddle's x lacation
+                    ballSpeedY = ballSpeedY * - 1;//bounce off
+                   
+                    score++;
+                   
+                    r = random(255);
+                    g = random(255);
+                    b = random(255);
+            
+        }
+                    else {//runs if player loses
+                    background(0);
+                    fill(255,0,0);
+                    textSize(30);
+                    text("GAME OVER!", width / 4, height / 2);
+                    text("(bottom)Player1 score: "+ score, width/4,height/4);
+                    text("(top)Player2 score: "+ score1,width/4,height/3);//if the y location of the ball if lower than the y lacation of the paddle, display the text
+                    noLoop();//freeze
+                }
+            }
+             if (ballY < (paddleHeight+ 4)) {//if the ball's y location is higher than the paddles y location
+                if (ballX > p2 && ballX < p2 + w) {//and if the ball's x lacation is the same as the paddle's x lacation
+                    ballSpeedY = ballSpeedY * - 1;//bounce off
+                   
+                    score1++;
+                   
+                    r = random(255);
+                    g = random(255);
+                    b = random(255);
+            
+        }
+                        else {
+                    background(0);
+                    fill(255,0,0);
+                    textSize(30);
+                     text("GAME OVER!", width / 4, height / 2);
+                     text("(bottom)Player1 score: "+ score, width/4,height/4);
+                    text("(top)Player2 score: "+ score1,width/4,height/3);//if the y location of the ball if lower than the y lacation of the paddle, display the text
+                    noLoop();//freeze
+                }
+            }
+            
+            }
+      
+
+        function drawHead() {//defines a function that creates the skull
+          //  noStroke();
+            fill(r,g,b);
+          //  ellipse(ballX, ballY, 20, 20);
+        
+          
+          image(head,ballX,ballY,head.width/4,head.height/4);
+        }
+
+        function drawPaddle() {//defines a function that creates the paddle
+            strokeWeight(4);
+            fill(r,g,b);
+            rect(mouseX-w/2, height - paddleHeight - 4, w, paddleHeight);
+        }
+        function drawPaddle2(){
+                        strokeWeight(4);
+            fill(r,g,b);
+            rect(p2,  4, w, paddleHeight);
+        }
+        function mouseClicked(){ //makes the menu interactive
+            click = true;// runs all the code in the draw function
+            if(mouseX>=width/3 && mouseX<=width/3 + 100 && mouseY>=height/3 - 15 && mouseY<=(height/3- 15)+ 30){
+                solo = true;
+            }
+             if(mouseX>=width/3 && mouseX<=width/3 + 100 && mouseY>=height/2 - 15 && mouseY<=(height/2 - 15)+ 30){
+                mul = true;
+            }
+        }
+        function menu(){ //cretaes the menu
+             if(click==true){
+            background(0);
+            fill(255);
+            rect(width/3,height/3- 15,100,30);
+            rect(width/3,height/2- 15,100,30);
+            fill(255,0,0);
+            text("     Singleplayer",width/3,height/3+ 5);
+            text("     Multiplayer",width/3,height/2+ 5);
+            }
+          
+        }
+        function drawPaddle0(){
+            strokeWeight(4);
+            fill(r,g,b);
+            rect(p1, height - paddleHeight - 4, w, paddleHeight);
+        }
+        function keyInput1(){ //controls for multiplayer
+            p1 = constrain(p1,0,width-width/3);
+            p2 = constrain(p2,0,width-width/3);
+            if(key === 'a'){
+                p1 -=10;
+            }
+            else if(key === 'd'){
+                p1 +=10;
+            }
+            if(key === 'j'){
+                p2 -=10;
+            }
+            else if(key === 'l'){
+                p2 +=10;
+            }
+        }
+     function displayScore(){ //displays the score at the of a multiplayer match
+         fill(0);
+         text("Your score: " + score,p1+ 20,height - paddleHeight+ 15);
+         text("Your score: " + score1,p2+ 20,paddleHeight);
+     }
+   
+    </script>
+</head>
+
+<body>
+<div id="code" class="container-fluid">
+        <script src="https://gist-it.appspot.com/github/sherzodm8441/p5js/blob/gh-pages/ping-pong.html?footer=0"></script>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script>
+        $(window).bind("load", function() {
+            $('#code').before($('#defaultCanvas0').remove());
+        });
+    </script>
+
+</body>
+
+</html>
