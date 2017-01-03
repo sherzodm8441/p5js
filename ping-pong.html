@@ -85,7 +85,7 @@
                  text("Press R to start",width/4,height-height/3)
                 if(ready==true){//runs if r is pressed
                  //bunch of functions are called here
-                background(c,v,b);//
+                background(c,v,b);
                 drawHead();
                 moveBall();
                 collision1();
@@ -171,7 +171,7 @@
                 if (ballX > p2 && ballX < p2 + w) {//and if the ball's x lacation is the same as the paddle's x lacation
                     ballSpeedY = ballSpeedY * - 1;//bounce off
                    
-                    score1++;
+                    score1++;//increases score
                    
                     r = random(255);
                     g = random(255);
