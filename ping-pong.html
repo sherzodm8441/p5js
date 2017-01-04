@@ -13,7 +13,7 @@
         var ballSpeedY = 5;//change in y value
         var paddleHeight = 25;
          
-        var click = false;
+       // var click = false;
         var w = 200;
         var score = 0;
         var score1 = 0; 
@@ -212,7 +212,7 @@
             rect(p2,  4, w, paddleHeight);
         }
         function mouseClicked(){ //makes the menu interactive
-            click = true;// runs all the code in the draw function
+           // click = true;// runs all the code in the draw function
             if(mouseX>=width/3 && mouseX<=width/3 + 100 && mouseY>=height/3 - 15 && mouseY<=(height/3- 15)+ 30){
                 solo = true;
             }
@@ -221,7 +221,7 @@
             }
         }
         function menu(){ //cretaes the menu
-             if(click==true){
+             //if(click==true){
             background(0);
             fill(255);
             rect(width/3,height/3- 15,100,30);
@@ -229,7 +229,7 @@
             fill(255,0,0);
             text("     Singleplayer",width/3,height/3+ 5);
             text("     Multiplayer",width/3,height/2+ 5);
-            }
+            //}
           
         }
         function drawPaddle0(){
